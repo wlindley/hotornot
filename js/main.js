@@ -1,13 +1,12 @@
-$(function() {
-	console.log("on ready");
-	$("div#hello").show();
-
+$(document).ready(function() {
 	function log(text) {
 		if (undefined !== console) {
 			console.log(text);
 		}
 	}
-	
+
+	$("div#hello").show();
+
 	function friendLoadSuccess(data) {
 		log("ajax friend load success");
 		friendHtml = "";
@@ -21,6 +20,6 @@ $(function() {
 		log("ajax friend load failed");
 	}
 
-	//$.ajax("http://graph.facebook.com/me/friends", {"success" : friendLoadSuccess, "error" : friendLoadFailure});
+	$.ajax("https://graph.facebook.com/me/friends", {"success" : friendLoadSuccess, "error" : friendLoadFailure});
 	log("ajax call for friends fired");
 });
