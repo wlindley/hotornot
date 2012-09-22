@@ -15,6 +15,9 @@ function initFB(){	// Load the SDK Asynchronously
 				FB.api('/me', function(response) {
 					console.log(response);
 				});	
+				console.log("calling main");
+				window.main();
+				console.log("called main");
 			}
 		});
 	}

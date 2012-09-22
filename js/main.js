@@ -1,25 +1,22 @@
-$(document).ready(function() {
+window.main = function() {
 	function log(text) {
 		if (undefined !== console) {
 			console.log(text);
 		}
 	}
+	log("hello main");
 
 	$("div#hello").show();
 
-	function friendLoadSuccess(data) {
-		log("ajax friend load success");
+	function friendLoad(data) {
+		log("ajax friend load");
+		log(data);
 		friendHtml = "";
 		for (friend in data.data) {
-			friendHtml += friend.name + "<br>";
+			friendHtml += data.data[friend].name + '<img src="https://graph.facebook.com/' + data.data[friend].id + '/picture"/>'  + '<br>';
 		}
 		$("div#friendlist").html(friendHtml);
 	}
 
-	function friendLoadFailure(data) {
-		log("ajax friend load failed");
-	}
-
-	$.ajax("https://graph.facebook.com/me/friends", {"success" : friendLoadSuccess, "error" : friendLoadFailure});
-	log("ajax call for friends fired");
-});
+	FB.api("/me/friends", friendLoad);
+};
