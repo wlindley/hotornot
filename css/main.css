@@ -3,10 +3,19 @@ body {
 	background-color: #DDDDDD;
 }
 
+td {
+	text-align: center;
+}
+
 td.title {
 	text-align: center;
 }
 
 td.name {
 	text-align: center;
+}
+
+img.selectorImage {
+	cursor: hand;
+	cursor: pointer;
 }

@@ -6,6 +6,32 @@ window.main = function() {
 	}
 
 	friendList = [];
+	firstFriendData = null;
+	secondFriendData = null;
+	
+	function selectUser(chosenUserData, nonChosenUserData) {
+		log("Selecting user named " + chosenUserData.name);
+		hideImages();
+		showNextPair();
+	}
+	
+	$("img#firstImg").click(function() {
+		selectUser(firstFriendData, secondFriendData);
+	});
+	$("img#secondImg").click(function() {
+		selectUser(secondFriendData, firstFriendData);
+	});
+	$("img#firstImg").load(function() {
+		$("img#firstImg").show();
+	});
+	$("img#secondImg").load(function() {
+		$("img#secondImg").show();
+	});
+
+	function hideImages() {
+		$("img#firstImg").hide();
+		$("img#secondImg").hide();
+	}
 
 	function showNextPair() {
 		firstIndex = Math.floor(Math.random() * friendList.length);
@@ -13,6 +39,8 @@ window.main = function() {
 		do {
 			secondIndex = Math.floor(Math.random() * friendList.length);
 		} while(firstIndex == secondIndex);
+		firstFriendData = friendList[firstIndex];
+		secondFriendData = friendList[secondIndex];
 		firstUrl = "https://graph.facebook.com/" + friendList[firstIndex].id + "/picture?type=large";
 		secondUrl = "https://graph.facebook.com/" + friendList[secondIndex].id + "/picture?type=large";
 		$("td#firstName").html('<b>' + friendList[firstIndex].name + '</b>');
