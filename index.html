@@ -11,11 +11,21 @@
 	<script>
 		initFB();
 	</script>
-	<div id="hello" style="display:none">
-		<p>Hello, world! - {{ type }}</p>
+	<div id="loading">
+		Loading...
 	</div>
-	<p>Friends:
-	<div id="friendlist" />
-	</p>
+	<div id="selector" style="display:none">
+		<table>
+			<tr>
+				<td class="title"><h2>Who's hotter?</h2></td>
+			</tr><tr>
+				<td class="name" id="firstName"/>
+				<td class="name" id="secondName" />
+			</tr><tr>
+				<td><img id="firstImg" /></td>
+				<td><img id="secondImg" /></td>
+			</tr>
+		</table>
+	</div>
 </body>
 </html>

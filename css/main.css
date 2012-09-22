@@ -2,3 +2,11 @@ body {
 	font-family: Verdana, Helvetica, sans-serif;
 	background-color: #DDDDDD;
 }
+
+td.title {
+	text-align: center;
+}
+
+td.name {
+	text-align: center;
+}
