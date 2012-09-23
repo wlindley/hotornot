@@ -17,10 +17,11 @@ window.main = function() {
 	hasLoadedPersonalData = false;
 	userId = "";
 
-	FB.getLoginStatus(function(response) {
-		if (response.authResponse) {
-			userId = response.authResponse.userId;
+	FB.api("/me", function(response) {
+		if (undefined === response['error']) {
+			return;
 		}
+		userId = response['id'];
 	});
 	
 	function selectUser(chosenUserData, nonChosenUserData) {
@@ -36,7 +37,7 @@ window.main = function() {
 	
 	function loadPersonalData() {
 		if (!hasLoadedPersonalData) {
-			$.ajax("?ajax=getDetailedInfo&fbid" + userId).done(showPersonalData);
+			$.ajax("?ajax=getDetailedInfo&fbid=" + userId).done(showPersonalData);
 			hasLoadedPersonalData = true;
 		}
 	}
