@@ -38,12 +38,16 @@ window.main = function() {
 	});
 	$("img#firstImg").load(function() {
 		$("img#firstImg").show();
+		$("td#firstName").show();
 	});
 	$("img#secondImg").load(function() {
 		$("img#secondImg").show();
+		$("td#secondName").show();
 	});
 
 	function hideImages() {
+		$("td#firstName").hide();
+		$("td#secondName").hide();
 		$("img#firstImg").hide();
 		$("img#secondImg").hide();
 	}
@@ -54,6 +58,7 @@ window.main = function() {
 		$("td#timer").html("Time remaining: " + secondsRemaining + " seconds");
 		if (timeRemaining <= 0) {
 			clearInterval(intervalFuncHandle);
+			hideImages();
 			showNextPair();
 		}
 	}
