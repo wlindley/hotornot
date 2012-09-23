@@ -1,4 +1,4 @@
-version: 5
+version: 6
 application: hotornotblitz
 runtime: python27
 api_version: 1
