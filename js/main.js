@@ -11,6 +11,7 @@ window.main = function() {
 	
 	function selectUser(chosenUserData, nonChosenUserData) {
 		log("Selecting user named " + chosenUserData.name);
+		$.ajax("/?ajax=vote&upvote=" + chosenUserData.id);
 		hideImages();
 		showNextPair();
 	}

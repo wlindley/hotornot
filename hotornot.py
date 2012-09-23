@@ -14,16 +14,22 @@ class MainPage(webapp2.RequestHandler):
 	def get(self):
 		self._setup()
 		self.templateValues['type'] = 'get'
-		self._render()
+		self._handle()
 
 	def post(self):
 		self._setup()
 		self.templateValues['type'] = 'post'
+		self._handle()
+
+	def _handle(self):
 		args = self.request.arguments()
 		if "ajax" in args:
 			self._ajax(self.request);
 		else:	
 			self._render()
+
+
+		
 	
 	def _render(self):
 		template = jinja_environment.get_template('index.html')
