@@ -42,6 +42,8 @@ class MainPage(webapp2.RequestHandler):
 		elif request.get('ajax', '') == 'getVotes':
 			cattle = self._getOrCreate(request.get('id'))	
 			self.response.out.write(str(cattle.upvotes))
+		elif request.get('ajaj', '') == 'getDetailedInfo':
+			pass
 
 	def _doVoting(self, upvote, downvote):
 		upCattle = self._getOrCreate(upvote)
