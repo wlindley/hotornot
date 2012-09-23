@@ -35,24 +35,24 @@ class MainPage(webapp2.RequestHandler):
 	def _ajax(self, request):
 		if request.get('ajax', '')  == 'vote':
 			upvote = request.get('upvote', '')
-			downvote = request.get('downvote', '')
+			fbid = request.get('fbid', '')
 		
-			cattle = self._doVoting(upvote, downvote)
-			self.response.out.write('{winner:'+ upvote +',upvotes:' + str(cattle.upvotes)+"}" )
+			cattle = self._doVoting(fbid, upvote)
+			self.response.out.write('{winner:'+ upvote +',upvotes:' + str(len(cattle.upvoters))+"}" )
 		elif request.get('ajax', '') == 'getVotes':
 			cattle = self._getOrCreate(request.get('id'))	
-			self.response.out.write(str(cattle.upvotes))
+			self.response.out.write(str(len(cattle.upvoters)))
 		elif request.get('ajaj', '') == 'getDetailedInfo':
 			pass
 
-	def _doVoting(self, upvote, downvote):
+	def _doVoting(self, fbid, upvote):
 		upCattle = self._getOrCreate(upvote)
-		upCattle.upvotes += 1
+		upCattle.upvoters.append(fbid)
 		upCattle.put();
 		return upCattle;
 	
 	def _getOrCreate(self, cattleId):
-		cattle = Cattle.get_or_insert(cattleId, upvotes=0, downvotes=0)
+		cattle = Cattle.get_or_insert(cattleId)
 		return cattle
 			
 
