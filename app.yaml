@@ -1,5 +1,5 @@
-application: hotornot
 version: 2
+application: hotornotblitz
 runtime: python27
 api_version: 1
 threadsafe: true
