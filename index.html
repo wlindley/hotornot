@@ -1,7 +1,7 @@
 <html>
 <head>
 	<script src="//connect.facebook.net/en_US/all.js"></script>
-	<link type="text/css" rel="css" href="/css/main.css" />
+	<link type="text/css" rel="stylesheet" href="/css/main.css" />
 	<script type="text/javascript" src="/js/jquery.js"></script>
 	<script type="text/javascript" src="/js/init.js"></script>
 	<script type="text/javascript" src="/js/main.js"></script>
@@ -17,13 +17,15 @@
 	<div id="selector" style="display:none">
 		<table>
 			<tr>
-				<td class="title" style="text-align:center" colspan="2"><h2>Who's hotter?</h2></td>
+				<td class="title" colspan="2"><h1>Who's hotter?</h1></td>
 			</tr><tr>
-				<td class="name" id="firstName" style="text-align:center"/>
-				<td class="name" id="secondName" style="text-align:center"/>
+				<td class="timer" id="timer" colspan="2">Time remaining: 10 seconds</td>
+			</tr><tr><td><br><br></td></tr><tr>
+				<td class="name" id="firstName" />
+				<td class="name" id="secondName" />
 			</tr><tr>
-				<td><img class="selectorImage" id="firstImg" style="cursor:hand; cursor:pointer"/></td>
-				<td><img class="selectorImage" id="secondImg" style="curosr:hand; cursor:pointer"/></td>
+				<td><img class="selectorImage" id="firstImg" /></td>
+				<td><img class="selectorImage" id="secondImg" /></td>
 			</tr>
 		</table>
 	</div>

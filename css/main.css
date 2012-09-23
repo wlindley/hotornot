@@ -3,12 +3,13 @@ body {
 	background-color: #DDDDDD;
 }
 
-td {
+td.title {
 	text-align: center;
 }
 
-td.title {
+td.timer {
 	text-align: center;
+	font-weight: bold;
 }
 
 td.name {
