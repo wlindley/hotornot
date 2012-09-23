@@ -18,7 +18,7 @@ window.main = function() {
 	userId = "";
 
 	FB.api("/me", function(response) {
-		if (undefined === response['error']) {
+		if (undefined !== response['error']) {
 			return;
 		}
 		userId = response['id'];
@@ -38,15 +38,16 @@ window.main = function() {
 	function loadPersonalData() {
 		if (!hasLoadedPersonalData) {
 			$.ajax("?ajax=getDetailedInfo&fbid=" + userId).done(showPersonalData);
-			log("getting detailed personal info");
 			hasLoadedPersonalData = true;
 		}
 	}
 
-	function showPersonalData(data) {
+	function showPersonalData(response) {
+		data = $.parseJSON(response);
 		personalInfoHtml = "";
 		dedupedData = {};
-		for (fbid in data) {
+		for (i in data) {
+			fbid = data[i];
 			if (fbid in dedupedData) {
 				dedupedData[fbid]++;
 			} else {
@@ -54,7 +55,7 @@ window.main = function() {
 			}
 		}
 		for (fbid in dedupedData) {
-			personalInfoHtml += getNameFromFbid(fbid) + ' voted for you ' + dedupedData[name] + ' times<br>';
+			personalInfoHtml += getNameFromFbid(fbid) + ' voted for you ' + dedupedData[fbid] + ' times<br>';
 		}
 		$("div#personalData").html(personalInfoHtml);
 		$("div#personalInfo").show();

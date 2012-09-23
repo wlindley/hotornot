@@ -10,11 +10,7 @@ function initFB(){	// Load the SDK Asynchronously
 		});
 		FB.login(function(response) {
 			if (response.authResponse) {
-				console.log("User is connected to the application.");
 				var accessToken = response.authResponse.accessToken;
-				FB.api('/me', function(response) {
-					console.log(response);
-				});	
 				window.main();
 			}
 		});
