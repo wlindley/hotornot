@@ -26,7 +26,7 @@ window.main = function() {
 	function selectUser(chosenUserData, nonChosenUserData) {
 		clearInterval(intervalFuncHandle);
 		numRatedThisSession++;
-		$.ajax("/?ajax=vote&upvote=" + chosenUserData.id);
+		$.ajax("/?ajax=vote&upvote=" + chosenUserData.id + "&fbid=" + userId);
 		hideImages();
 		if (personalDataRatedThreshold <= numRatedThisSession) {
 			loadPersonalData();
@@ -36,7 +36,7 @@ window.main = function() {
 	
 	function loadPersonalData() {
 		if (!hasLoadedPersonalData) {
-			$.ajax("?ajax=getDetailedInfo&userId" + userId).done(showPersonalData);
+			$.ajax("?ajax=getDetailedInfo&fbid" + userId).done(showPersonalData);
 			hasLoadedPersonalData = true;
 		}
 	}
@@ -44,18 +44,27 @@ window.main = function() {
 	function showPersonalData(data) {
 		personalInfoHtml = "";
 		dedupedData = {};
-		for (name in data) {
-			if (name in dedupedData) {
-				dedupedData[name]++;
+		for (fbid in data) {
+			if (fbid in dedupedData) {
+				dedupedData[fbid]++;
 			} else {
-				dedupedData[name] = 1;
+				dedupedData[fbid] = 1;
 			}
 		}
-		for (name in dedupedData) {
-			personalInfoHtml += name + ' voted for you ' + dedupedData[name] + ' times<br>';
+		for (fbid in dedupedData) {
+			personalInfoHtml += getNameFromFbid(fbid) + ' voted for you ' + dedupedData[name] + ' times<br>';
 		}
 		$("div#personalData").html(personalInfoHtml);
 		$("div#personalInfo").show();
+	}
+
+	function getNameFromFbid(fbid) {
+		for (i in friendList) {
+			if (fbid == friendList[i].id) {
+				return friendList[i].name;
+			}
+		}
+		return "Unknown friend";
 	}
 	
 	$("img#firstImg").click(function() {

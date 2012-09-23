@@ -43,7 +43,7 @@ class MainPage(webapp2.RequestHandler):
 			cattle = self._getOrCreate(request.get('id'))	
 			self.response.out.write(str(cattle.upvotes))
 		elif request.get('ajax', '') == 'getDetailedInfo':
-			self.response.out.write(str(self._getVotes(request.get('userId'))))
+			self.response.out.write(str(self._getVotes(request.get('fbid'))))
 
 	def _doVoting(self, upvote, downvote):
 		upCattle = self._getOrCreate(upvote)
@@ -55,7 +55,7 @@ class MainPage(webapp2.RequestHandler):
 		cattle = Cattle.get_or_insert(cattleId, upvotes=0, downvotes=0)
 		return cattle
 
-	def _getVotes(self, userId):
+	def _getVotes(self, fbid):
 		pass
 
 app = webapp2.WSGIApplication([('/', MainPage)], debug=True)
