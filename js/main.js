@@ -5,7 +5,7 @@ window.main = function() {
 		}
 	}
 
-	personalDataRatedThreshold = 20;
+	personalDataRatedThreshold = 2;
 	selectionTime = 6 * 1000; //in milliseconds
 	interval = 100; //in milliseconds
 	timeRemaining = 0;
@@ -20,13 +20,23 @@ window.main = function() {
 		numRatedThisSession++;
 		$.ajax("/?ajax=vote&upvote=" + chosenUserData.id);
 		hideImages();
-		showNextPair();
+		log("numRatedThisSession: " + numRatedThisSession + ", threshold: " + personalDataRatedThreshold);
 		if (personalDataRatedThreshold <= numRatedThisSession) {
-			showPersonalData();
+			loadPersonalData();
 		}
+		showNextPair();
+	}
+	
+	function loadPersonalData() {
+		$.ajax("?ajax=getDetailedInfo&userId" + userId).done(showPersonalData);
 	}
 
-	function showPersonalData() {
+	function showPersonalData(data) {
+		personalInfoHtml = ""
+		for (name in data) {
+			personalInfoHtml += name + ' voted for you ' + data[name] + ' times<br>';
+		}
+		$("div#personalData").html(personalInfoHtml);
 		$("div#personalInfo").show();
 	}
 	
