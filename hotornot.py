@@ -27,9 +27,6 @@ class MainPage(webapp2.RequestHandler):
 			self._ajax(self.request);
 		else:	
 			self._render()
-
-
-		
 	
 	def _render(self):
 		template = jinja_environment.get_template('index.html')
@@ -42,6 +39,9 @@ class MainPage(webapp2.RequestHandler):
 		
 			cattle = self._doVoting(upvote, downvote)
 			self.response.out.write('{winner:'+ upvote +',upvotes:' + str(cattle.upvotes)+"}" )
+		elif request.get('ajax', '') == 'getVotes':
+			cattle = self._getOrCreate(request.get('id'))	
+			self.response.out.write(str(cattle.upvotes))
 
 	def _doVoting(self, upvote, downvote):
 		upCattle = self._getOrCreate(upvote)

@@ -42,6 +42,18 @@ window.main = function() {
 		} while(firstIndex == secondIndex);
 		firstFriendData = friendList[firstIndex];
 		secondFriendData = friendList[secondIndex];
+		
+		$("span#firstUpvotes").html("");
+		$("span#secondUpvotes").html("");
+		
+		$.ajax("?ajax=getVotes&id=" + firstFriendData.id).done(function(response){
+			$("span#firstUpvotes").html(response);
+		});
+
+		$.ajax("?ajax=getVotes&id=" + secondFriendData.id).done(function(response){
+			$("span#secondUpvotes").html(response);
+		});
+
 		firstUrl = "https://graph.facebook.com/" + friendList[firstIndex].id + "/picture?type=large";
 		secondUrl = "https://graph.facebook.com/" + friendList[secondIndex].id + "/picture?type=large";
 		$("td#firstName").html('<b>' + friendList[firstIndex].name + '</b>');
