@@ -5,6 +5,7 @@ window.main = function() {
 		}
 	}
 
+	personalDataRatedThreshold = 20;
 	selectionTime = 4 * 1000; //4 seconds
 	interval = 100; //in milliseconds
 	timeRemaining = 0;
@@ -12,12 +13,21 @@ window.main = function() {
 	friendList = [];
 	firstFriendData = null;
 	secondFriendData = null;
+	numRatedThisSession = 0;
 	
 	function selectUser(chosenUserData, nonChosenUserData) {
-		log("Selecting user named " + chosenUserData.name);
+		clearInterval(intervalFuncHandle);
+		numRatedThisSession++;
 		$.ajax("/?ajax=vote&upvote=" + chosenUserData.id);
 		hideImages();
 		showNextPair();
+		if (personalDataRatedThreshold <= numRatedThisSession) {
+			showPersonalData();
+		}
+	}
+
+	function showPersonalData() {
+		$("div#personalInfo").show();
 	}
 	
 	$("img#firstImg").click(function() {
