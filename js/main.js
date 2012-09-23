@@ -5,6 +5,10 @@ window.main = function() {
 		}
 	}
 
+	selectionTime = 4 * 1000; //4 seconds
+	interval = 100; //in milliseconds
+	timeRemaining = 0;
+	intervalFuncHandle = null;
 	friendList = [];
 	firstFriendData = null;
 	secondFriendData = null;
@@ -33,6 +37,16 @@ window.main = function() {
 		$("img#secondImg").hide();
 	}
 
+	function updateTimer() {
+		timeRemaining -= interval;
+		secondsRemaining = (timeRemaining / 1000).toFixed(1);
+		$("td#timer").html("Time remaining: " + secondsRemaining + " seconds");
+		if (timeRemaining <= 0) {
+			clearInterval(intervalFuncHandle);
+			showNextPair();
+		}
+	}
+
 	function showNextPair() {
 		firstIndex = Math.floor(Math.random() * friendList.length);
 		secondIndex = -1;
@@ -47,6 +61,8 @@ window.main = function() {
 		$("td#secondName").html('<b>' + friendList[secondIndex].name + '</b>');
 		$("img#firstImg").attr("src", firstUrl);
 		$("img#secondImg").attr("src", secondUrl);
+		timeRemaining = selectionTime;
+		intervalFuncHandle = setInterval(updateTimer, interval);
 	}
 
 	function friendLoad(data) {
