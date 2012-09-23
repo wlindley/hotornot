@@ -6,7 +6,7 @@ window.main = function() {
 	}
 
 	personalDataRatedThreshold = 20;
-	selectionTime = 4 * 1000; //4 seconds
+	selectionTime = 6 * 1000; //in milliseconds
 	interval = 100; //in milliseconds
 	timeRemaining = 0;
 	intervalFuncHandle = null;
