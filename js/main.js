@@ -5,7 +5,7 @@ window.main = function() {
 		}
 	}
 
-	personalDataRatedThreshold = 2;
+	personalDataRatedThreshold = 20;
 	selectionTime = 6 * 1000; //in milliseconds
 	interval = 100; //in milliseconds
 	timeRemaining = 0;
@@ -14,13 +14,20 @@ window.main = function() {
 	firstFriendData = null;
 	secondFriendData = null;
 	numRatedThisSession = 0;
+	hasLoadedPersonalData = false;
+	userId = "";
+
+	FB.getLoginStatus(function(response) {
+		if (response.authResponse) {
+			userId = response.authResponse.userId;
+		}
+	});
 	
 	function selectUser(chosenUserData, nonChosenUserData) {
 		clearInterval(intervalFuncHandle);
 		numRatedThisSession++;
 		$.ajax("/?ajax=vote&upvote=" + chosenUserData.id);
 		hideImages();
-		log("numRatedThisSession: " + numRatedThisSession + ", threshold: " + personalDataRatedThreshold);
 		if (personalDataRatedThreshold <= numRatedThisSession) {
 			loadPersonalData();
 		}
@@ -28,7 +35,10 @@ window.main = function() {
 	}
 	
 	function loadPersonalData() {
-		$.ajax("?ajax=getDetailedInfo&userId" + userId).done(showPersonalData);
+		if (!hasLoadedPersonalData) {
+			$.ajax("?ajax=getDetailedInfo&userId" + userId).done(showPersonalData);
+			hasLoadedPersonalData = true;
+		}
 	}
 
 	function showPersonalData(data) {
