@@ -4,18 +4,56 @@ window.main = function() {
 			console.log(text);
 		}
 	}
-	log("hello main");
 
-	$("div#hello").show();
+	friendList = [];
+	firstFriendData = null;
+	secondFriendData = null;
+	
+	function selectUser(chosenUserData, nonChosenUserData) {
+		log("Selecting user named " + chosenUserData.name);
+		hideImages();
+		showNextPair();
+	}
+	
+	$("img#firstImg").click(function() {
+		selectUser(firstFriendData, secondFriendData);
+	});
+	$("img#secondImg").click(function() {
+		selectUser(secondFriendData, firstFriendData);
+	});
+	$("img#firstImg").load(function() {
+		$("img#firstImg").show();
+	});
+	$("img#secondImg").load(function() {
+		$("img#secondImg").show();
+	});
+
+	function hideImages() {
+		$("img#firstImg").hide();
+		$("img#secondImg").hide();
+	}
+
+	function showNextPair() {
+		firstIndex = Math.floor(Math.random() * friendList.length);
+		secondIndex = -1;
+		do {
+			secondIndex = Math.floor(Math.random() * friendList.length);
+		} while(firstIndex == secondIndex);
+		firstFriendData = friendList[firstIndex];
+		secondFriendData = friendList[secondIndex];
+		firstUrl = "https://graph.facebook.com/" + friendList[firstIndex].id + "/picture?type=large";
+		secondUrl = "https://graph.facebook.com/" + friendList[secondIndex].id + "/picture?type=large";
+		$("td#firstName").html('<b>' + friendList[firstIndex].name + '</b>');
+		$("td#secondName").html('<b>' + friendList[secondIndex].name + '</b>');
+		$("img#firstImg").attr("src", firstUrl);
+		$("img#secondImg").attr("src", secondUrl);
+	}
 
 	function friendLoad(data) {
-		log("ajax friend load");
-		log(data);
-		friendHtml = "";
-		for (friend in data.data) {
-			friendHtml += data.data[friend].name + '<img src="https://graph.facebook.com/' + data.data[friend].id + '/picture"/>'  + '<br>';
-		}
-		$("div#friendlist").html(friendHtml);
+		friendList = data.data;
+		showNextPair();
+		$("div#loading").hide();
+		$("div#selector").show();
 	}
 
 	FB.api("/me/friends", friendLoad);

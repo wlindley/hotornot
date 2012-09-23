@@ -2,3 +2,21 @@ body {
 	font-family: Verdana, Helvetica, sans-serif;
 	background-color: #DDDDDD;
 }
+
+td.title {
+	text-align: center;
+}
+
+td.timer {
+	text-align: center;
+	font-weight: bold;
+}
+
+td.name {
+	text-align: center;
+}
+
+img.selectorImage {
+	cursor: hand;
+	cursor: pointer;
+}
