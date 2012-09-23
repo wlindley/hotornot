@@ -38,6 +38,7 @@ window.main = function() {
 	function loadPersonalData() {
 		if (!hasLoadedPersonalData) {
 			$.ajax("?ajax=getDetailedInfo&fbid=" + userId).done(showPersonalData);
+			log("getting detailed personal info");
 			hasLoadedPersonalData = true;
 		}
 	}
