@@ -1,6 +1,7 @@
 import os
 import webapp2
 import jinja2
+import json
 from cattle import Cattle
 from google.appengine.ext import db
 
@@ -42,8 +43,8 @@ class MainPage(webapp2.RequestHandler):
 		elif request.get('ajax', '') == 'getVotes':
 			cattle = self._getOrCreate(request.get('id'))	
 			self.response.out.write(str(len(cattle.upvoters)))
-		elif request.get('ajaj', '') == 'getDetailedInfo':
-			pass
+		elif request.get('ajax', '') == 'getDetailedInfo':
+			self.response.out.write(str(self._getVotes(request.get('userId'))))
 
 	def _doVoting(self, fbid, upvote):
 		upCattle = self._getOrCreate(upvote)
@@ -54,6 +55,8 @@ class MainPage(webapp2.RequestHandler):
 	def _getOrCreate(self, cattleId):
 		cattle = Cattle.get_or_insert(cattleId)
 		return cattle
-			
+
+	def _getVotes(self, userId):
+		return json.dumps(self._getOrCreate(userId).upvoters)
 
 app = webapp2.WSGIApplication([('/', MainPage)], debug=True)

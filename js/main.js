@@ -14,19 +14,47 @@ window.main = function() {
 	firstFriendData = null;
 	secondFriendData = null;
 	numRatedThisSession = 0;
+	hasLoadedPersonalData = false;
+	userId = "";
+
+	FB.getLoginStatus(function(response) {
+		if (response.authResponse) {
+			userId = response.authResponse.userId;
+		}
+	});
 	
 	function selectUser(chosenUserData, nonChosenUserData) {
 		clearInterval(intervalFuncHandle);
 		numRatedThisSession++;
 		$.ajax("/?ajax=vote&upvote=" + chosenUserData.id);
 		hideImages();
-		showNextPair();
 		if (personalDataRatedThreshold <= numRatedThisSession) {
-			showPersonalData();
+			loadPersonalData();
+		}
+		showNextPair();
+	}
+	
+	function loadPersonalData() {
+		if (!hasLoadedPersonalData) {
+			$.ajax("?ajax=getDetailedInfo&userId" + userId).done(showPersonalData);
+			hasLoadedPersonalData = true;
 		}
 	}
 
-	function showPersonalData() {
+	function showPersonalData(data) {
+		personalInfoHtml = "";
+		dedupedData = {};
+		for (name in data) {
+			if (name in dedupedData) {
+				dedupedData[name]++;
+			} else {
+				dedupedData[name] = 1;
+			}
+		}
+		for (name in dedupedData) {
+			personalInfoHtml += name + ' voted for you ' + dedupedData[name] + ' times<br>';
+		}
+		$("div#personalData").html(personalInfoHtml);
 		$("div#personalInfo").show();
 	}
 	
