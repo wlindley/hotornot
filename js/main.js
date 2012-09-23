@@ -42,9 +42,17 @@ window.main = function() {
 	}
 
 	function showPersonalData(data) {
-		personalInfoHtml = ""
+		personalInfoHtml = "";
+		dedupedData = {};
 		for (name in data) {
-			personalInfoHtml += name + ' voted for you ' + data[name] + ' times<br>';
+			if (name in dedupedData) {
+				dedupedData[name]++;
+			} else {
+				dedupedData[name] = 1;
+			}
+		}
+		for (name in dedupedData) {
+			personalInfoHtml += name + ' voted for you ' + dedupedData[name] + ' times<br>';
 		}
 		$("div#personalData").html(personalInfoHtml);
 		$("div#personalInfo").show();
